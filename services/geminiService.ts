@@ -1,11 +1,17 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import type { SocialPostTemplate, Tone, AspectRatio } from '../types';
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable not set");
-}
+let ai: GoogleGenAI | null = null;
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const getAiClient = () => {
+  if (!process.env.API_KEY) {
+    throw new Error("The API_KEY environment variable is not set. Please configure it in your deployment settings to use this application.");
+  }
+  if (!ai) {
+    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  }
+  return ai;
+};
 
 const textModel = 'gemini-2.5-pro';
 const imageModel = 'imagen-4.0-generate-001';
@@ -46,6 +52,10 @@ const handleApiError = (error: unknown, context: string): never => {
      if (message.includes('safety')) {
        throw new Error('The request was blocked for safety reasons. Please adjust your content idea and try again.');
     }
+    // Pass through specific errors from our client check
+    if (message.includes('api_key')) {
+        throw error;
+    }
   }
   throw new Error(`An unexpected error occurred during ${context}. Check the console for more details.`);
 };
@@ -67,6 +77,7 @@ export const generateInitialPost = async (idea: string, tone: Tone): Promise<Soc
   `;
 
   try {
+    const ai = getAiClient();
     const response = await ai.models.generateContent({
       model: textModel,
       contents: prompt,
@@ -109,6 +120,7 @@ export const regenerateText = async (idea: string, tone: Tone, originalText: str
   `;
 
   try {
+    const ai = getAiClient();
     const response = await ai.models.generateContent({
       model: textModel,
       contents: prompt,
@@ -145,6 +157,7 @@ export const regenerateImage = async (postText: string, hashtags: string, aspect
   
   let newImagePrompt = '';
   try {
+    const ai = getAiClient();
     const response = await ai.models.generateContent({
       model: textModel,
       contents: promptForPrompt,
@@ -176,6 +189,7 @@ export const regenerateImage = async (postText: string, hashtags: string, aspect
 
 export const generateImage = async (prompt: string, aspectRatio: AspectRatio): Promise<string> => {
   try {
+    const ai = getAiClient();
     const response = await ai.models.generateImages({
       model: imageModel,
       prompt: prompt,
