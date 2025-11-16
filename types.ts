@@ -13,4 +13,4 @@ export interface SocialPost extends SocialPostTemplate {
   image: string; // Base64 encoded image string
 }
 
-export type Theme = 'light' | 'dark' | 'matrix';
+export type Theme = 'light' | 'dark';

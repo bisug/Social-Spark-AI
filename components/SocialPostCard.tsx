@@ -84,15 +84,8 @@ const SocialPostCard: React.FC<SocialPostCardProps> = ({ post, onRegenerateText,
   };
 
   return (
-    <div className="bg-[var(--color-bg-secondary)] rounded-2xl overflow-hidden shadow-lg border border-[var(--color-border)] flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-accent)]/80 hover:shadow-2xl hover:shadow-[var(--color-accent-glow)]">
-      <div className="p-4 flex items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)]/50">
-        <div className="flex items-center gap-3">
-          <SparklesIcon className="w-6 h-6 text-[var(--color-accent)]" />
-          <h3 className="text-xl font-bold text-[var(--color-text-primary)]">Post Preview</h3>
-        </div>
-      </div>
-      
-      <div className="relative w-full aspect-square bg-gray-200 dark:bg-gray-900">
+    <div className="group relative bg-[var(--color-bg-secondary)] rounded-2xl overflow-hidden shadow-lg border border-[var(--color-border)] flex flex-col h-full transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[var(--color-accent-shadow)]">
+      <div className="relative w-full aspect-square bg-[var(--color-bg-tertiary)]">
         {post.image && <img src={post.image} alt="Generated visual" className="w-full h-full object-cover" />}
         {(isImageRegenerating || !post.image) && (
           <div className="absolute inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center transition-opacity">
@@ -100,7 +93,7 @@ const SocialPostCard: React.FC<SocialPostCardProps> = ({ post, onRegenerateText,
           </div>
         )}
         {!isImageRegenerating && (
-           <div className="absolute inset-0 bg-black/60 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+           <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
              <button onClick={handleRegenerateImageClick} className="flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white font-semibold py-2 px-4 rounded-lg hover:bg-white/30 transition-colors">
               <MagicWandIcon className="w-5 h-5"/> Regenerate Image
              </button>
@@ -114,43 +107,46 @@ const SocialPostCard: React.FC<SocialPostCardProps> = ({ post, onRegenerateText,
             <svg className="animate-spin h-8 w-8 text-[var(--color-text-primary)]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
           </div>
         )}
-        <div className="flex justify-between items-center mb-2">
-            <h4 className="font-semibold text-[var(--color-text-primary)]">Post Content</h4>
+        <div className="flex justify-between items-start mb-3">
             <div className="flex items-center gap-2">
-              <button onClick={handleRegenerateTextClick} className="p-1.5 rounded-md hover:bg-[var(--color-button-secondary-bg)] transition-colors text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]" aria-label="Regenerate text"><MagicWandIcon className="w-5 h-5"/></button>
+              <SparklesIcon className="w-5 h-5 text-[var(--color-accent)]" />
+              <h4 className="font-bold text-lg text-[var(--color-text-primary)]">Generated Post</h4>
+            </div>
+            <div className="flex items-center gap-1">
+              <button onClick={handleRegenerateTextClick} className="p-1.5 rounded-md hover:bg-[var(--color-bg-tertiary)] transition-colors text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]" aria-label="Regenerate text"><MagicWandIcon className="w-5 h-5"/></button>
               {isEditing ? (
-                  <button onClick={handleSave} className="text-sm font-semibold text-[var(--color-accent)] hover:underline">Save</button>
+                  <button onClick={handleSave} className="text-sm font-semibold text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors p-1.5">Save</button>
               ) : (
-                  <button onClick={() => setIsEditing(true)} className="p-1.5 rounded-md hover:bg-[var(--color-button-secondary-bg)] transition-colors text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]" aria-label="Edit text"><EditIcon className="w-5 h-5" /></button>
+                  <button onClick={() => setIsEditing(true)} className="p-1.5 rounded-md hover:bg-[var(--color-bg-tertiary)] transition-colors text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]" aria-label="Edit text"><EditIcon className="w-5 h-5" /></button>
               )}
             </div>
         </div>
 
         {isEditing ? (
           <div className="flex flex-col gap-4 flex-grow">
-            <textarea value={editedText} onChange={(e) => setEditedText(e.target.value)} rows={6} className="w-full bg-transparent border border-[var(--color-border)] rounded-lg p-2 focus:ring-1 focus:ring-[var(--color-ring)] text-sm"/>
-            <input type="text" value={editedHashtags} onChange={(e) => setEditedHashtags(e.target.value)} className="w-full bg-transparent border border-[var(--color-border)] rounded-lg p-2 focus:ring-1 focus:ring-[var(--color-ring)] text-sm font-medium text-cyan-400"/>
+            <textarea value={editedText} onChange={(e) => setEditedText(e.target.value)} rows={6} className="w-full bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg p-2 focus:ring-1 focus:ring-[var(--color-ring)] text-sm"/>
+            <input type="text" value={editedHashtags} onChange={(e) => setEditedHashtags(e.target.value)} className="w-full bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg p-2 focus:ring-1 focus:ring-[var(--color-ring)] text-sm font-medium text-[var(--color-accent)]"/>
           </div>
         ) : (
           <div className="flex flex-col gap-4 flex-grow">
             <p className="text-[var(--color-text-secondary)] whitespace-pre-wrap flex-grow">{editedText}</p>
-            <p className="text-cyan-400 font-medium break-words">{editedHashtags}</p>
+            <p className="text-[var(--color-accent)] font-medium break-words">{editedHashtags}</p>
           </div>
         )}
       </div>
       
-      <div className="p-4 border-t border-[var(--color-border)] mt-auto">
+      <div className="p-4 border-t border-[var(--color-border)] mt-auto bg-transparent">
         <div className="flex items-stretch gap-3">
           <button
             onClick={handleCopy}
-            className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-button-secondary-bg)] text-[var(--color-button-secondary-text)] font-semibold py-2 px-4 rounded-lg hover:bg-[var(--color-button-secondary-hover-bg)] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--color-bg-secondary)] focus:ring-[var(--color-ring)]"
+            className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] font-semibold py-2 px-4 rounded-lg hover:bg-[var(--color-border)] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--color-bg-secondary)] focus:ring-[var(--color-ring)]"
           >
             {copied ? <><CheckIcon className="w-5 h-5 text-green-400" />Copied!</> : 'Copy Text'}
           </button>
           {isShareSupported && (
             <button
               onClick={handleShare}
-              className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-button-secondary-bg)] text-[var(--color-button-secondary-text)] font-semibold py-2 px-4 rounded-lg hover:bg-[var(--color-button-secondary-hover-bg)] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--color-bg-secondary)] focus:ring-[var(--color-ring)]"
+              className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] font-semibold py-2 px-4 rounded-lg hover:bg-[var(--color-border)] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[var(--color-bg-secondary)] focus:ring-[var(--color-ring)]"
               aria-label="Share post"
             >
               <ShareIcon className="w-5 h-5" />

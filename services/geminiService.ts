@@ -35,16 +35,16 @@ const handleApiError = (error: unknown, context: string): never => {
   if (error instanceof Error) {
     const message = error.message.toLowerCase();
     if (message.includes('api key not valid')) {
-      throw new Error('Your API Key is invalid. Please ensure it is set correctly in your environment.');
+      throw new Error('Your API Key is invalid. Please check your key and try again.');
     }
     if (message.includes('quota') || message.includes('429')) {
-      throw new Error('You have exceeded your API quota. Please try again later.');
+      throw new Error('API Limit Reached. You have exceeded your request limit. Please try again tomorrow or check your plan.');
     }
     if (message.includes('fetch')) {
       throw new Error('A network error occurred. Please check your internet connection and try again.');
     }
      if (message.includes('safety')) {
-       throw new Error('The request was blocked due to safety settings. Please modify your prompt.');
+       throw new Error('The request was blocked for safety reasons. Please adjust your content idea and try again.');
     }
   }
   throw new Error(`An unexpected error occurred during ${context}. Check the console for more details.`);
@@ -53,7 +53,7 @@ const handleApiError = (error: unknown, context: string): never => {
 
 export const generateInitialPost = async (idea: string, tone: Tone): Promise<SocialPostTemplate[]> => {
   const prompt = `
-    Based on the following idea, generate an array of at least 5 distinct and versatile social media post variations.
+    Based on the following idea, generate an array of 4 distinct and versatile social media post variations.
     The tone of voice must be: ${tone}.
 
     Idea: "${idea}"
