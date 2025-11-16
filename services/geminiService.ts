@@ -160,7 +160,11 @@ export const regenerateImage = async (postText: string, hashtags: string, aspect
       },
     });
     const jsonText = response.text.trim();
-    newImagePrompt = JSON.parse(jsonText).imagePrompt;
+    const result = JSON.parse(jsonText);
+    newImagePrompt = result.imagePrompt;
+    if (!newImagePrompt) {
+      throw new Error('The AI failed to generate a new image prompt. Please try again.');
+    }
   } catch (error) {
     handleApiError(error, 'image prompt regeneration');
   }
