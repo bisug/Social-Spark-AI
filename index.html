@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Spark AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--color-bg-primary);
+        color: var(--color-text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      
+      /* Theme Variables */
+      :root {
+        --color-bg-primary: #f9fafb;
+        --color-bg-secondary: #ffffff;
+        --color-bg-glass: rgba(255, 255, 255, 0.6);
+        --color-text-primary: #111827;
+        --color-text-secondary: #374151;
+        --color-text-muted: #6b7280;
+        --color-border: #e5e7eb;
+        --color-border-focus: #6366f1;
+        --color-ring: #6366f1;
+        --color-placeholder: #9ca3af;
+        --color-accent: #6366f1;
+        --color-accent-hover: #4f46e5;
+        --color-accent-glow: rgba(99, 102, 241, 0.4);
+        --color-button-secondary-bg: #f3f4f6;
+        --color-button-secondary-hover-bg: #e5e7eb;
+        --color-button-secondary-text: #374151;
+        --color-header-grad-from: rgba(99, 102, 241, 0.1);
+        --color-header-grad-via: #f9fafb;
+      }
+
+      html[data-theme='dark'] {
+        --color-bg-primary: #0a0e1b;
+        --color-bg-secondary: #171b2d;
+        --color-bg-glass: rgba(23, 27, 45, 0.6);
+        --color-text-primary: #f0f2ff;
+        --color-text-secondary: #c0c5e0;
+        --color-text-muted: #8086a6;
+        --color-border: #2a2f4c;
+        --color-border-focus: #7b7eff;
+        --color-ring: #7b7eff;
+        --color-placeholder: #5a6081;
+        --color-accent: #7b7eff;
+        --color-accent-hover: #6366f1;
+        --color-accent-glow: rgba(123, 126, 255, 0.3);
+        --color-button-secondary-bg: #2a2f4c;
+        --color-button-secondary-hover-bg: #3c4162;
+        --color-button-secondary-text: #f0f2ff;
+        --color-header-grad-from: rgba(123, 126, 255, 0.15);
+        --color-header-grad-via: #0a0e1b;
+      }
+
+      html[data-theme='matrix'] {
+        --color-bg-primary: #000000;
+        --color-bg-secondary: #0a0a0a;
+        --color-bg-glass: rgba(0, 20, 0, 0.5);
+        --color-text-primary: #00ff41;
+        --color-text-secondary: #00ff41;
+        --color-text-muted: #00b32d;
+        --color-border: #004d13;
+        --color-border-focus: #00ff41;
+        --color-ring: #00ff41;
+        --color-placeholder: #00802b;
+        --color-accent: #00ff41;
+        --color-accent-hover: #00b32d;
+        --color-accent-glow: rgba(0, 255, 65, 0.3);
+        --color-button-secondary-bg: #00330d;
+        --color-button-secondary-hover-bg: #004d13;
+        --color-button-secondary-text: #00ff41;
+        --color-header-grad-from: rgba(0, 255, 65, 0.2);
+        --color-header-grad-via: #000000;
+      }
+
+
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes fade-in-up {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+      }
+      .animate-fade-in-up {
+        opacity: 0; /* Start hidden */
+        animation: fade-in-up 0.6s ease-out forwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.1"
+  }
+}
+</script>
+<script>
+  // Immediately set theme from localStorage to prevent FOUC
+  (function() {
+    try {
+      const theme = localStorage.getItem('social-spark-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {
+      console.error("Could not set theme from localStorage", e);
+    }
+  })();
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

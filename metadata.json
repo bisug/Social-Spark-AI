@@ -1,0 +1,5 @@
+{
+  "name": "Social Spark AI",
+  "description": "A cross-platform social media content generator. Users input an idea and a desired tone, and the app generates drafted posts tailored for LinkedIn, Twitter/X, and Instagram, along with a unique image for each platform.",
+  "requestFramePermissions": []
+}
